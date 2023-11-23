@@ -191,6 +191,7 @@ public class Torneo {
      * @param jugador Jugador que se desea registrar.
      */
     public void registrarJugador(Equipo equipo, Jugador jugador) {
+        //validacion cuando e torneo es invidual
         ASSERTION.assertion( !LocalDate.now().isAfter(fechaCierreInscripciones) , "No se pueden registrar jugadores después del a fecha de cierre de inscripciones");
         validarLimiteEdadJugador(jugador); 
         validarJugadorExiste(jugador);

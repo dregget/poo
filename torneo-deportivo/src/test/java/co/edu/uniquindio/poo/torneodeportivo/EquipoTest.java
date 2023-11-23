@@ -110,4 +110,20 @@ public class EquipoTest {
         
         LOG.info("Fin de prueba inscripcionNoAbierta...");
     }
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    @Test
+    public void noRegistrarJugadorEnTorneoIndividual() {
+        // Crear un equipo
+        Equipo equipo = new Equipo("NombreEquipo", new Persona("Representante", "Apellido", "email@equipo.com", "123456789"));
+
+        // Crear un torneo de carácter individual
+        Torneo torneoIndividual = new Torneo("Torneo Individual", LocalDate.now(), LocalDate.now(), LocalDate.now(), (byte) 10, (byte) 5, 0, TipoTorneo.LOCAL, CaracterTorneo.INDIVIDUAL);
+
+        // Intentar registrar un jugador en un equipo en un torneo individual
+        Jugador jugador = new Jugador("NombreJugador", "Apellido", "email@jugador.com", "987654321", LocalDate.now().minusYears(20));
+
+        Throwable exception = assertThrows(Exception.class, () -> equipo.registrarJugador(jugador, torneoIndividual));
+        assertTrue(exception.getMessage().contains("No se pueden registrar jugadores en un equipo en un torneo individual."));
+    }
 }

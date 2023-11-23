@@ -123,4 +123,27 @@ public class TorneoTest {
         
         LOG.info("Fin de prueba Cierre inscripción anterior al inicio...");
     }
+    @Test
+    public void registrarJugadorEnTorneoIndividualDeberiaLanzarExcepcion() {
+        // Configuración del torneo como individual
+        Torneo torneo = new Torneo(
+            "Copa Individual", // Nombre del torneo
+            LocalDate.of(2023, 12, 19), // Fecha de inicio del torneo
+            LocalDate.of(2023, 11, 30), // Fecha inicio inscripciones
+            LocalDate.of(2023, 12, 1), // Fecha cierre inscripciones
+            (byte) 24, // Número de participantes
+            (byte) 0, // Límite de edad
+            0, // Valor de inscripción
+            TipoTorneo.LOCAL, // Tipo de torneo
+            CaracterTorneo.INDIVIDUAL // Carácter del torneo (individual)
+        );
+
+        // Se crea y registra un equipo en el torneo
+        Equipo equipo = new Equipo("EquipoPrueba", new Persona("m","s","s", "123"));
+        torneo.registrarParticipante(equipo);
+
+        // Se intenta registrar un jugador en el equipo del torneo individual
+        Jugador jugador = new Jugador("JugadorPrueba", "ApellidoPrueba","123","123", LocalDate.of(2000, 1, 1));
+        assertThrows(IllegalArgumentException.class, () -> torneo.registrarJugador("EquipoPrueba", jugador));
+    }
 }
